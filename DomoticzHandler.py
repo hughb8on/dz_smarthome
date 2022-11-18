@@ -169,6 +169,7 @@ class ContactAlexaEndpoint(DomoticzEndpoint):
     def __init__(self, endpointId, friendlyName="", description="", manufacturerName=""):
         super().__init__(endpointId, friendlyName, description, manufacturerName)
         self.addCapability(AlexaContactSensor(self, 'Alexa.ContactSensor',[{'name': 'detectionState'}]))
+        self.addCapability(AlexaEndpointHealth(self, 'Alexa.EndpointHealth',[{'name': 'connectivity'}]))
 
 @ENDPOINT_ADAPTERS.register('TemperatureSensor')
 class TemperatureSensorAlexaEndpoint(DomoticzEndpoint):
