@@ -131,6 +131,7 @@ class AlexaInterface:
         for prop in self.propertiesSupported():
             prop_name = prop['name']
             prop_value = self._endpoint.getProperty(prop_name)
+            if prop_name == 'connectivity': prop_value = { 'value': 'OK' }
             if prop_value is not None:
                 yield {
                     'name': prop_name,
@@ -139,6 +140,13 @@ class AlexaInterface:
                     'timeOfSample': datetime.now().replace(microsecond=0).isoformat()+"Z",
                     'uncertaintyInMilliseconds': 0,
                 }
+@INTERFACES.register('Alexa.EndpointHealth')
+class AlexaEndpointHealth(AlexaInterface):
+    def name(self):
+        return 'Alexa.EndpointHealth'
+
+    def propertiesSupported(self):
+        return [{'name': 'connectivity'}]
 
 @INTERFACES.register('Alexa.PowerController')
 class AlexaPowerController(AlexaInterface):
