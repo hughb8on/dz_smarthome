@@ -262,9 +262,14 @@ class Domoticz(object):
             endpoint.addCapability(AlexaColorTemperatureController(endpoint, 'Alexa.ColorTemperatureController'))
         elif className == 'Blind' or className == 'RFY':
             endpoint.addCapability(AlexaPercentageController(endpoint, 'Alexa.PercentageController',[{'name': 'percentage'}]))
-        cookies = request['endpoint']['cookie']
-        if cookies is not None:
-            endpoint.addCookie(cookies)
+        # HUGH: the next four lines correct a bug in the three lines after them
+        if 'cookie' in request['endpoint']:
+            cookies = request['endpoint']['cookie']
+            if cookies is not None:
+                endpoint.addCookie(cookies)
+#        cookies = request['endpoint']['cookie']
+#        if cookies is not None:
+#            endpoint.addCookie(cookies)
         endpoint.setHandler(self)
         return endpoint
 
